@@ -1,4 +1,4 @@
-# < Title of your final project >
+# < Predicting direction of stock price index movement using Trend Deterministic Data >
 
 ### Groups
 * < name, student ID1 >
@@ -7,7 +7,7 @@
 * ...
 
 ### Goal
-A breif introduction about your project, i.e., what is your goal?
+The goal is to predict direction of stock price index movement by financial parameters.
 
 ### Demo 
 You should provide an example commend to reproduce your result
