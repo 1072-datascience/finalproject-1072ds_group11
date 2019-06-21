@@ -15,6 +15,7 @@ for (i in vars){
   norm_vars <- c(norm_vars,name)
 }
 #parameter selection data
+set.seed(999)
 for (y in setdiff(levels(d$year),'2000')){
   index_sample1 <- sample(rownames(subset(d,year==y & dir==1)),round(0.2*length(rownames(subset(d,year==y & dir==1)))))
   index_sample0 <- sample(rownames(subset(d,year==y & dir==0)),round(0.2*length(rownames(subset(d,year==y & dir==0)))))
