@@ -4,7 +4,7 @@ library(nnet)
 library(caret)
 library(kernlab)
 #load data and add and adjust new variables
-d <- read.csv('/Users/lucas/Downloads/JPY1.csv', header = T)
+d <- read.csv('data/JPY1.csv', header = T)
 d$year <- factor(substr(d$Date, 1, 4))
 d$dir <- factor(c(NA,ifelse(tail(d$Close,-1)-head(d$Close,-1)>=0,1,0)))
 vars <- setdiff(colnames(d), c('Date','Date.1','Open','High','Low','Close','dir','MACDsignal','MACDhist','year'))
