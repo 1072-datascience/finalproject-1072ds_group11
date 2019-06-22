@@ -4,6 +4,8 @@ library(neuralnet)
 library(nnet)
 library(caret)
 library(kernlab)
+library(e1071)
+library(naivebayes)
 
 ### load data and add and adjust new variables
 d <- read.csv('data/JPY1.csv', header = T)
@@ -17,7 +19,7 @@ for (i in vars){
   norm_vars <- c(norm_vars,name)
 }
 
-### stratified random sampling 
+### stratified random sampling  to get 0.2 of all data with year and balance 0 / 1 to train a model
 set.seed(777)
 for (y in setdiff(levels(d$year),'2000')){
   index_sample1 <- sample(rownames(subset(d,year==y & dir==1)),round(0.2*length(rownames(subset(d,year==y & dir==1)))))
@@ -28,6 +30,8 @@ for (y in setdiff(levels(d$year),'2000')){
     d_parameter_selection <- rbind(d_parameter_selection,d[sort(c(index_sample1,index_sample0),decreasing = FALSE),c('year','dir',norm_vars)])
   }
 }
+
+### straified random sampling to get the half of all data with year and balance 0 / 1
 for (y in setdiff(levels(d$year),'2000')){
   index_sample1 <- sample(rownames(subset(d_parameter_selection,year==y & dir==1)),round(0.5*dim(subset(d_parameter_selection,year==y & dir==1)))[1])
   index_sample0 <- sample(rownames(subset(d_parameter_selection,year==y & dir==0)),round(0.5*dim(subset(d_parameter_selection,year==y & dir==0)))[1])
@@ -109,6 +113,15 @@ for (i in seq(10,200,10)){
 rf_parameter <- rf_ps_pred[order(rf_ps_pred$mean,decreasing = TRUE),][1:3,1]
 
 # train Naive Bayes model and record tuning parameters
+NB_model = naiveBayes(dir ~ ., data = d_ps_train)
+print(NB_model)
+train_predict = predict(NB_model, d_ps_train)
+table(d_ps_train$dir, train_predict)
+mean(d_ps_train$dir == train_predict)
+
+NB_model = naive_bayes(dir ~ ., usekernel = T, data = d_ps_train)
+
+print(NB_model)
 
 # Comparison of these models
 for (y in setdiff(levels(d$year),'2000')){
