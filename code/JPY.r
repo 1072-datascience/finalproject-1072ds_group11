@@ -113,15 +113,16 @@ for (i in seq(10,200,10)){
 rf_parameter <- rf_ps_pred[order(rf_ps_pred$mean,decreasing = TRUE),][1:3,1]
 
 # train Naive Bayes model and record tuning parameters
-NB_model = naiveBayes(dir ~ ., data = d_ps_train)
-print(NB_model)
-train_predict = predict(NB_model, d_ps_train)
+NB_model = naive_bayes(dir ~ ., usekernel = T, data = d_ps_train)
+train_predict = predict(NB_model, d_ps_train, type = "class")
 table(d_ps_train$dir, train_predict)
 mean(d_ps_train$dir == train_predict)
 
-NB_model = naive_bayes(dir ~ ., usekernel = T, data = d_ps_train)
+holdout_predict = predict(NB_model, d_ps_holdout, type = "class")
+table(d_ps_holdout$dir, holdout_predict)
+mean(d_ps_holdout$dir == holdout_predict)
 
-print(NB_model)
+NB_model = naive_bayes(dir ~ ., usekernel = T, data = d_ps_train)
 
 # Comparison of these models
 for (y in setdiff(levels(d$year),'2000')){
