@@ -8,7 +8,7 @@ library(e1071)
 library(naivebayes)
 
 #load data and add and adjust new variables
-d <- read.csv('/Users/lucas/Downloads/JPY1.csv', header = T)
+d <- read.csv('data/JPY1.csv', header = T)
 d$year <- factor(substr(d$Date, 1, 4))
 d$dir <- factor(c(NA,ifelse(tail(d$Close,-1)-head(d$Close,-1)>=0,1,0)))
 vars <- setdiff(colnames(d), c('Date','Date.1','Open','High','Low','Close','dir','MACDsignal','MACDhist','year'))
@@ -307,3 +307,6 @@ accuracy_holdout <- sum(diag(table(NB_result_holdout))/dim(d_holdout)[1])
 NB_performance <- data.frame(accuracy_train=accuracy_train,accuracy_holdout=accuracy_holdout)
 #table
 compare_list_dc <- list(ANN=ann_performance,SVM=svm_performance,RandomForest=rf_performance,NB=NB_performance)
+
+
+
