@@ -1,0 +1,12 @@
+name: shiny
+title: shiny
+username:
+account: shutong
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 994228
+bundleId: 2172485
+url: https://shutong.shinyapps.io/shiny/
+when: 1561309815.70054
+asMultiple: FALSE
+asStatic: FALSE
