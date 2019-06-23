@@ -35,19 +35,38 @@ Rscript code/your_script.R --input data/training --output results/performance.ts
 ### code
 
 * Which method do you use?
+  
+    knn, logistic regression, naive bayes, random forest, SVM, ANN
+
 * What is a null model for comparison?
+  
+    We just compare the 6 models.
+
 * How do your perform evaluation? ie. Cross-validation, or extra separated data
+
+    We used stratified random sampling to get 0.2 of  data with the same proportion about stock direction.
+    And to use the small models' tuning parameter to train the half of data.
 
 ### results
 
 * Which metric do you use 
   * precision, recall, R-square
 * Is your improvement significant?
+  
+    Yes
+  
 * What is the challenge part of your project?
 
+    
 ## Reference
 * Code/implementation which you include/reference (__You should indicate in your presentation if you use code for others. Otherwise, cheating will result in 0 score for final project.__)
-* Packages you use
-* Related publications
 
+    We studied the paper about predicting stock and stock price in 
+    
+* Packages you use
+    
+    
+* Related publications
+    
+    Shiny
 
