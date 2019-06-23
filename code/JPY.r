@@ -215,3 +215,40 @@ library(class)
 hold_knn = knn(d_ps_train[12:20], d_ps_holdout[12:20], d_ps_train$dir, k = 5)
 table(d_ps_holdout$dir, hold_knn)
 mean(d_ps_holdout$dir == hold_knn)
+
+## half data
+# logistic regression 0.8
+model = glm(dir ~ ., data = d_train[1:11], family = binomial(link="logit"), na.action=na.exclude)
+holdout_predict = ifelse(predict(model, d_holdout, type = "response") >= 0.5, 1, 0)
+table(d_holdout$dir, holdout_predict)
+mean(d_holdout$dir == holdout_predict)
+
+# knn 0.7
+library(class)
+hold_knn = knn(d_train[2:11], d_holdout[2:11], d_train$dir, k = 5)
+table(d_holdout$dir, hold_knn)
+mean(d_holdout$dir == hold_knn)
+
+## discrete
+# logistic regression 0.95
+model = glm(dir ~ ., data = d_train[,c(1,12:20)], family = binomial(link="logit"), na.action=na.exclude)
+holdout_predict = ifelse(predict(model, d_holdout, type = "response") >= 0.5, 1, 0)
+table(d_holdout$dir, holdout_predict)
+mean(d_holdout$dir == holdout_predict)
+
+# knn 0.93
+library(class)
+knn_accuracy = matrix(0L, nrow = 20, ncol = 1)
+for(k in 1:20){
+  hold_knn = knn(d_train[12:20], d_holdout[12:20], d_train$dir, k = k)
+  knn_accuracy[k,1] = round(mean(d_holdout$dir == hold_knn), digits = 4)
+}
+table(d_holdout$dir, hold_knn)
+mean(d_holdout$dir == hold_knn)
+
+
+### pca
+library(ggbiplot)
+d_train$dir = as.numeric(as.character(d_train$dir))
+d_train_pca = prcomp(d_train[1:11], center = TRUE, scale. = TRUE)
+ggbiplot(d_train_pca, obs.scale = 1, var.scale = 1, groups = d_train$dir, varname.size = 0, circle = TRUE, ellipse = TRUE)
