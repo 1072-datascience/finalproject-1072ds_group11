@@ -7,7 +7,7 @@ i<-1
 while(i < length(args))
 {
   if(args[i] == "--input"){
-    FX<-as.integer(args[i+1])
+    FX<-args[i+1]
     i<-i+1
   }else if(args[i] == "--output"){
     out_f<-args[i+1]
