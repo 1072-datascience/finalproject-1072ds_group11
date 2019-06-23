@@ -188,3 +188,30 @@ rf_performance$mean <- (as.numeric(rf_performance$accuracy_train)+as.numeric(rf_
 
 #table
 compare_list <- list(ANN=ann_performance,SVM=svm_performance,RandomForest=rf_performance)
+
+### trials
+## continuous
+# logistic regression 0.8
+model = glm(dir ~ ., data = d_ps_train[1:11], family = binomial(link="logit"), na.action=na.exclude)
+holdout_predict = ifelse(predict(model, d_ps_holdout, type = "response") >= 0.5, 1, 0)
+table(d_ps_holdout$dir, holdout_predict)
+mean(d_ps_holdout$dir == holdout_predict)
+
+# knn 0.7
+library(class)
+hold_knn = knn(d_ps_train[2:11], d_ps_holdout[2:11], d_ps_train$dir, k = 5)
+table(d_ps_holdout$dir, hold_knn)
+mean(d_ps_holdout$dir == hold_knn)
+
+## discrete
+# logistic regression 0.95
+model = glm(dir ~ ., data = d_ps_train[,c(1,12:20)], family = binomial(link="logit"), na.action=na.exclude)
+holdout_predict = ifelse(predict(model, d_ps_holdout, type = "response") >= 0.5, 1, 0)
+table(d_ps_holdout$dir, holdout_predict)
+mean(d_ps_holdout$dir == holdout_predict)
+
+# knn 0.93
+library(class)
+hold_knn = knn(d_ps_train[12:20], d_ps_holdout[12:20], d_ps_train$dir, k = 5)
+table(d_ps_holdout$dir, hold_knn)
+mean(d_ps_holdout$dir == hold_knn)
